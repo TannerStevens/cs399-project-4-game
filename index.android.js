@@ -7,25 +7,44 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  Navigator,
   StyleSheet,
   Text,
   View
 } from 'react-native';
+import Menu from './js/Menu'
+import Game from './js/Game'
+import Score from './js/Score'
 
 export default class cs399Project4Game extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+      <Navigator
+        initialRoute={{id: 'Menu', passProps:{}}}
+        renderScene={this.renderScene.bind(this)}
+      />
+    );
+  }
+
+  renderScene(route, navigator){
+    var componentToRender = null;
+    switch (route.id){
+      case 'Menu':
+        componentToRender = <Menu navigator={navigator} route={route}/>;
+        break;
+      case 'Game':
+        componentToRender = <Game navigator={navigator} route={route}/>;
+        break;
+      case 'Score':
+        componentToRender = <Score navigator={navigator} route={route}/>;
+        break;
+      default:
+        break;
+    }
+
+    return(
+      <View>
+        {componentToRender}
       </View>
     );
   }
